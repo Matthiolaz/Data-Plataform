@@ -12,13 +12,27 @@ def get_token():
 	return token
 
 def get_movie(token):
-	url = "https://api.themoviedb.org/3/discover/movie"    
+	url = "https://api.themoviedb.org/3/discover/movie"
+
 	headers = {
 	"accept": "application/json",
 	"Authorization": f'Bearer {token}'
 	}
 
+	params = {
+	"page": 1,
+	}
+
 	response = requests.get(url, headers=headers)
+	pages = response.json()["total_pages"]
+
+	print(pages)
+
+	# for i in pages:
+	# 	response = requests.get(url, headers=headers, params=params)
+
+
+	headers
 	return json.dumps(response.json())
 
 def save_to_bronze(data, file_format, schema, table):
@@ -34,4 +48,4 @@ def save_to_bronze(data, file_format, schema, table):
 token = get_token()
 movie = get_movie(token)
 
-save_to_bronze(movie, "json", "themoviedb", "movie")
+# save_to_bronze(movie, "json", "themoviedb", "movie")
